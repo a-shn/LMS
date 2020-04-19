@@ -118,6 +118,11 @@ public class ApplicationContextConfig {
     }
 
     @Bean
+    public ChatRepository chatRepository() {
+        return new ChatJdbcTemplateImpl(jdbcTemplate());
+    }
+
+    @Bean
     public UsersRepository userRepository() {
         return new UsersJdbcTemplateImpl(jdbcTemplate());
     }

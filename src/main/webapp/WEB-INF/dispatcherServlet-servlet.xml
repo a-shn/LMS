@@ -9,6 +9,7 @@
             <bean class="org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver"/>
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
+    <mvc:resources mapping="/static/**" location="WEB-INF/static/" />
 
 <!--    <bean id="applicationContextConfig" class="com.company.config.ApplicationContextConfig"/>-->
 <!--    <bean id="webSecurityConfig" class="com.company.security.config.WebSecurityConfig"/>-->
