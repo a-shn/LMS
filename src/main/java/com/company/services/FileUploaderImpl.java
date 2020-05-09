@@ -53,6 +53,14 @@ public class FileUploaderImpl implements FileUploader {
             String torrentPath = directory + "/coursesFolder/" + course.getCourseId() + "/torrent/" + course.getCourseId() + ".torrent";
             String coursePath = directory + "/coursesFolder/" + course.getCourseId() + "/course/";
             File file = new File(coursePath);
+            File torrentFolder = new File(directory + "/coursesFolder/" + course.getCourseId());
+            if (!torrentFolder.exists()) {
+                torrentFolder.mkdir();
+            }
+            torrentFolder = new File(directory + "/coursesFolder/" + course.getCourseId() + "/torrent/");
+            if (!torrentFolder.exists()) {
+                torrentFolder.mkdir();
+            }
             multipartFile.transferTo(new File(torrentPath));
             fileRepository.save(new FileInfo(course.getCourseId().toString(), multipartFile.getOriginalFilename(), torrentPath, size, type));
             if (!file.exists()) {

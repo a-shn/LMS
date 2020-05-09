@@ -13,15 +13,16 @@ import java.util.stream.Stream;
 
 public class CourseBuilderImpl implements CourseBuilder {
     @Override
-    public void build(String directory) {
+    public int build(String directory) {
         try {
-            buildFileStructure(directory);
+            return buildFileStructure(directory);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return -1;
     }
 
-    private void buildFileStructure(String directory) throws IOException {
+    private int buildFileStructure(String directory) throws IOException {
         Stream<Path> walk = Files.walk(Paths.get(directory));
         List<String> files = walk.filter(Files::isRegularFile)
                 .map(x -> x.toString()).collect(Collectors.toList());
@@ -58,5 +59,6 @@ public class CourseBuilderImpl implements CourseBuilder {
             String newPath = directory + "/other/" + otherFile.split("/")[tmp.length - 1];
             Files.move(Paths.get(otherFile), Paths.get(newPath));
         }
+        return videos.size();
     }
 }

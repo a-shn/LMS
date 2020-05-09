@@ -32,6 +32,16 @@ public class ApplicationContextConfig {
     private Environment environment;
 
     @Bean
+    public CourseLessonsRepository courseLessonsRepository() {
+        return new CourseLessonsJdbcTemplateImpl(jdbcTemplate());
+    }
+
+    @Bean
+    public CourseBuilder courseBuilder() {
+        return new CourseBuilderImpl();
+    }
+
+    @Bean
     public RepositoriesProxy repositoriesProxy() {
         return new RepositoriesProxyImpl(userRepository(), coursesRepository());
     }

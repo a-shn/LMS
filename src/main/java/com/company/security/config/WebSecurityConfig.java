@@ -33,6 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/signin").permitAll()
                 .antMatchers("/uploadfiles").authenticated()
                 .antMatchers("/getfile").authenticated()
+                .antMatchers("/courses").authenticated()
+                .antMatchers("/course").authenticated()
                 .antMatchers("/profile").authenticated()
                 .antMatchers("/").authenticated();
 

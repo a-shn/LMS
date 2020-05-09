@@ -3,9 +3,9 @@
     <title>Courses</title>
 </head>
 <body>
-Your courses:
+Your courses: <br>
 <#list courses as course>
-    ${course}
+    <a href="/course?courseId=${course.courseId}">${course.courseName}</a><br>
 </#list>
 
 <p>Upload new .torrent course</p>

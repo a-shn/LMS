@@ -30,13 +30,9 @@ public class CoursesController {
     @GetMapping("/courses")
     public ModelAndView getCoursesPage(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         ModelAndView modelAndView = new ModelAndView();
-        Map<String, List<String>> map = new HashMap<>();
+        Map<String, List<Course>> map = new HashMap<>();
         List<Course> courses = usersCoursesRepository.getCoursesById(userDetails.getUser().getUserId());
-        List<String> courseNames = new ArrayList<>();
-        for (Course course: courses) {
-            courseNames.add(course.getCourseName());
-        }
-        map.put("courses", courseNames);
+        map.put("courses", courses);
         modelAndView.setViewName("courses");
         modelAndView.addAllObjects(map);
         return modelAndView;
@@ -47,6 +43,7 @@ public class CoursesController {
         String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
         if (extension.equals("torrent")) {
             fileUploader.uploadCourse(multipartFile);
+
             return "redirect:/courses";
         }
         return "redirect:/courses?error";
