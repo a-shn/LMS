@@ -10,6 +10,7 @@
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
     <mvc:resources mapping="/static/**" location="WEB-INF/static/" />
+    <mvc:resources mapping="/coursesFolder/**" location="WEB-INF/symlinks/coursesFolder/" />
 
 <!--    <bean id="applicationContextConfig" class="com.company.config.ApplicationContextConfig"/>-->
 <!--    <bean id="webSecurityConfig" class="com.company.security.config.WebSecurityConfig"/>-->

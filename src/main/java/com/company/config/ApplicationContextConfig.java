@@ -2,8 +2,8 @@ package com.company.config;
 
 import com.company.repositories.*;
 import com.company.services.*;
-import com.company.services.torrent.TorrentDownloader;
-import com.company.services.torrent.TorrentDownloaderImpl;
+import com.company.services.TorrentDownloader;
+import com.company.services.TorrentDownloaderImpl;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;

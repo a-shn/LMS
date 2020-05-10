@@ -51,7 +51,7 @@ public class SignUpServiceImpl implements SignUpService {
             md.update(tmp.getBytes());
             byte[] digest = md.digest();
             String hash = Base64.getEncoder().encodeToString(digest);;
-            String part1 = "http://localhost:8080/springservice/verification";
+            String part1 = "http://localhost:8080/verification";
             String part2 = "?hash=" + hash;
             return part1 + part2;
         } catch (NoSuchAlgorithmException e) {

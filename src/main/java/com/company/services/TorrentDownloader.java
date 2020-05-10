@@ -1,4 +1,4 @@
-package com.company.services.torrent;
+package com.company.services;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;

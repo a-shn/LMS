@@ -9,7 +9,6 @@
         <input type="text" name="login"/>
         <p>e-mail:</p>
         <input type="email" name="email"/>
-        ${email}
         <p>password:</p>
         <input type="password" name="password"/>
         <p>

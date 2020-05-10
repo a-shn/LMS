@@ -5,7 +5,6 @@ import com.company.models.Course;
 import com.company.models.FileInfo;
 import com.company.repositories.CoursesRepository;
 import com.company.repositories.FileRepository;
-import com.company.services.torrent.TorrentDownloader;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -43,13 +42,11 @@ public class FileUploaderImpl implements FileUploader {
         }
     }
 
-    public void uploadCourse(MultipartFile multipartFile) {
+    @Override
+    public void uploadCourse(MultipartFile multipartFile, Course course) {
         try {
             String type = multipartFile.getContentType();
             Long size = multipartFile.getSize();
-            Course course = new Course(null, null, null,
-                    multipartFile.getOriginalFilename(), "DOWNLOADING");
-            course = coursesRepository.save(course);
             String torrentPath = directory + "/coursesFolder/" + course.getCourseId() + "/torrent/" + course.getCourseId() + ".torrent";
             String coursePath = directory + "/coursesFolder/" + course.getCourseId() + "/course/";
             File file = new File(coursePath);

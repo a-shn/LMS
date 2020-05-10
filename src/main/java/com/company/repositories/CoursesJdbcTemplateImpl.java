@@ -20,6 +20,10 @@ public class CoursesJdbcTemplateImpl implements CoursesRepository {
     private static final String SQL_INSERT = "INSERT INTO courses (source_general_name, source_course_url, course_name, status) VALUES (?,?,?,?)";
     //language=SQL
     private static final String SQL_SELECT_ALL = "SELECT * FROM courses";
+    //language=SQL
+    private static final String SQL_SELECT_AVAILABLE = "SELECT * FROM courses WHERE status='AVAILABLE'";
+    //language=SQL
+    private static final String SQL_UPDATE_STATUS = "UPDATE courses SET status=? WHERE course_id=?";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -37,6 +41,20 @@ public class CoursesJdbcTemplateImpl implements CoursesRepository {
         return new Course(courseId, sourceGeneralName, sourceCourseUrl, courseName, status);
     };
 
+    @Override
+    public void updateStatus(long courseId, String status) {
+        int updRows = jdbcTemplate.update(connection -> {
+            PreparedStatement statement = connection
+                    .prepareStatement(SQL_UPDATE_STATUS);
+            statement.setString(1, status);
+            statement.setLong(2, courseId);
+            return statement;
+        });
+
+        if (updRows == 0) {
+            throw new IllegalArgumentException();
+        }
+    }
 
     @Override
     public Course save(Course course) {
@@ -67,6 +85,11 @@ public class CoursesJdbcTemplateImpl implements CoursesRepository {
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public List<Course> availableCourses() {
+        return jdbcTemplate.query(SQL_SELECT_AVAILABLE, coursesRowMapper);
     }
 
     @Override

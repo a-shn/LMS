@@ -3,10 +3,20 @@
     <title>Course</title>
 </head>
 <body>
-Lessons:
+<#if isUserInCourse == false>
+    <form method="post" action="joincourse?courseId=${courseId}">
+        <input type="submit" id="btn" value="Join course">
+    </form>
+</#if>
+Lessons:<br><br>
 <#list lessons as lesson>
-    Lesson #${lesson.lessonNumber}:<br>
-    <video width="320" height="240" controls src="${lesson.videoUrl}" type="video/mp4"></video><br>
+    <#if lesson.isWatched==true>Lesson #${lesson.lessonNumber} (watched):<br>
+    <#else>Lesson #${lesson.lessonNumber}
+        <form method="post" action="lessonwatched?courseId=${courseId}&lessonNumber=${lesson.lessonNumber}">
+            <input type="submit" id="btn" value="watched">
+        </form>
+    </#if>
+    <video width="320" height="240" controls src="${lesson.videoUrl}"></video><p>
 </#list>
 </body>
 </html>

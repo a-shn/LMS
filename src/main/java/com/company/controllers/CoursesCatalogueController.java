@@ -19,7 +19,7 @@ public class CoursesCatalogueController {
     @GetMapping("/courses_catalogue")
     public ModelAndView getCatalogue() {
         ModelAndView modelAndView = new ModelAndView();
-        List<Course> courses = coursesRepository.allCourses();
+        List<Course> courses = coursesRepository.availableCourses();
         modelAndView.addObject("courses", courses);
         return modelAndView;
     }

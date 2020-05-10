@@ -13,4 +13,5 @@ public class Lesson {
     private Long courseId;
     private Integer lessonNumber;
     private String videoUrl;
+    private Boolean isWatched;
 }

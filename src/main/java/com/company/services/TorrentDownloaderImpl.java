@@ -1,7 +1,7 @@
-package com.company.services.torrent;
+package com.company.services;
 
 import com.company.repositories.CourseLessonsRepository;
-import com.company.services.CourseBuilder;
+import com.company.repositories.CoursesRepository;
 import com.turn.ttorrent.client.Client;
 import com.turn.ttorrent.client.SharedTorrent;
 import lombok.SneakyThrows;
@@ -18,6 +18,8 @@ public class TorrentDownloaderImpl implements TorrentDownloader {
     @Autowired
     private CourseBuilder courseBuilder;
     @Autowired
+    private CoursesRepository coursesRepository;
+    @Autowired
     private CourseLessonsRepository courseLessonsRepository;
 
     public TorrentDownloaderImpl() {
@@ -25,17 +27,25 @@ public class TorrentDownloaderImpl implements TorrentDownloader {
 
     @Override
     public void download(String torrentPath, String destinationPath) throws IOException, NoSuchAlgorithmException {
-        TorrentThread torrentThread = new TorrentThread(torrentPath, destinationPath);
+        TorrentThread torrentThread = new TorrentThread(torrentPath, destinationPath, courseBuilder, courseLessonsRepository,
+                coursesRepository);
         torrentThread.start();
     }
 
     private static class TorrentThread extends Thread {
-        private String torrentPath;
-        private String destinationPath;
+        private final String torrentPath;
+        private final String destinationPath;
+        private final CourseBuilder courseBuilder;
+        private final CourseLessonsRepository courseLessonsRepository;
+        private final CoursesRepository coursesRepository;
 
-        TorrentThread(String torrentPath, String destinationPath) {
+        TorrentThread(String torrentPath, String destinationPath,CourseBuilder courseBuilder,
+                      CourseLessonsRepository courseLessonsRepository, CoursesRepository coursesRepository) {
             this.torrentPath = torrentPath;
             this.destinationPath = destinationPath;
+            this.courseBuilder = courseBuilder;
+            this.courseLessonsRepository = courseLessonsRepository;
+            this.coursesRepository = coursesRepository;
         }
 
         @SneakyThrows
@@ -47,11 +57,14 @@ public class TorrentDownloaderImpl implements TorrentDownloader {
                             new File(torrentPath),
                             new File(destinationPath)));
             client.download();
+
             client.waitForCompletion();
-//            int lessonsNumber = courseBuilder.build(destinationPath);
-//            String[] tmp = destinationPath.split("/");
-//            int courseId = Integer.parseInt(tmp[tmp.length - 2]);
-//            courseLessonsRepository.addLessonsOfCourse(courseId, lessonsNumber);
+
+            String[] tmp = destinationPath.split("/");
+            int courseId = Integer.parseInt(tmp[tmp.length - 2]);
+            coursesRepository.updateStatus(courseId, "AVAILABLE");
+            int lessonsNumber = courseBuilder.build(destinationPath);
+            courseLessonsRepository.addLessonsOfCourse(courseId, lessonsNumber);
         }
     }
 

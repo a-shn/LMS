@@ -1,6 +1,7 @@
 package com.company.controllers;
 
 import com.company.models.Course;
+import com.company.repositories.CoursesRepository;
 import com.company.repositories.UsersCoursesRepository;
 import com.company.security.details.UserDetailsImpl;
 import com.company.services.FileUploader;
@@ -25,6 +26,8 @@ public class CoursesController {
     @Autowired
     private UsersCoursesRepository usersCoursesRepository;
     @Autowired
+    private CoursesRepository coursesRepository;
+    @Autowired
     private FileUploader fileUploader;
 
     @GetMapping("/courses")
@@ -39,11 +42,15 @@ public class CoursesController {
     }
 
     @PostMapping("/uploadCourse")
-    public String uploadFile(@RequestParam("file") MultipartFile multipartFile) {
+    public String uploadFile(@RequestParam("file") MultipartFile multipartFile,
+                             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
         if (extension.equals("torrent")) {
-            fileUploader.uploadCourse(multipartFile);
-
+            Course course = new Course(null, null, null,
+                    multipartFile.getOriginalFilename(), "DOWNLOADING");
+            course = coursesRepository.save(course);
+            fileUploader.uploadCourse(multipartFile, course);
+            usersCoursesRepository.save(userDetails.getUser(), course);
             return "redirect:/courses";
         }
         return "redirect:/courses?error";
