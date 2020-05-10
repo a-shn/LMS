@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .failureUrl("/signin?error")
-                .defaultSuccessUrl("/profile")
+                .defaultSuccessUrl("/profile", true)
                 .permitAll();
     }
 }

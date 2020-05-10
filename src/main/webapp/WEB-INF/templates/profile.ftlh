@@ -5,6 +5,7 @@
 <body>
 Your email: ${email}
 <p>Your nickname: ${nickname}
-<p></p><a href="courses.ftlh">Your courses</a>
+<p><a href="/courses">Your courses</a><br>
+    <a href="/courses_catalogue">All public courses</a>
 </body>
 </html>

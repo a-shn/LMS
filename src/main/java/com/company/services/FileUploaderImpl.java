@@ -48,7 +48,7 @@ public class FileUploaderImpl implements FileUploader {
             String type = multipartFile.getContentType();
             Long size = multipartFile.getSize();
             Course course = new Course(null, null, null,
-                    multipartFile.getOriginalFilename());
+                    multipartFile.getOriginalFilename(), "DOWNLOADING");
             course = coursesRepository.save(course);
             String torrentPath = directory + "/coursesFolder/" + course.getCourseId() + "/torrent/" + course.getCourseId() + ".torrent";
             String coursePath = directory + "/coursesFolder/" + course.getCourseId() + "/course/";

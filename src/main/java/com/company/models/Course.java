@@ -12,4 +12,5 @@ public class Course {
     private String sourceGeneralName;
     private String sourceCourseUrl;
     private String courseName;
+    private String status;
 }
