@@ -36,7 +36,7 @@ public class SignUpServiceImpl implements SignUpService {
             Map<String, String> map = new HashMap<>();
             map.put("login", login);
             map.put("link", link);
-            String html = templateResolver.process("verification_email_message.ftlh", map);
+            String html = templateResolver.process("verification_email_message.ftl", map);
             emailSender.sendEmail("Email verification.", userDto.getEmail(), html);
             return true;
         } else {

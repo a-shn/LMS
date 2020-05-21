@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
     <context:component-scan base-package="com.company"/>
     <mvc:annotation-driven>
@@ -12,6 +12,8 @@
     <mvc:resources mapping="/static/**" location="WEB-INF/static/" />
     <mvc:resources mapping="/coursesFolder/**" location="WEB-INF/symlinks/coursesFolder/" />
 
-<!--    <bean id="applicationContextConfig" class="com.company.config.ApplicationContextConfig"/>-->
-<!--    <bean id="webSecurityConfig" class="com.company.security.config.WebSecurityConfig"/>-->
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"
+                p:paramName="lang" />
+    </mvc:interceptors>
 </beans>

@@ -27,7 +27,7 @@ public class FileLinkSenderAspect {
         root.put("login", resultDto.getLogin());
         root.put("url", resultDto.getUrl());
         root.put("originalFileName", resultDto.getOriginalFileName());
-        String html = templateResolver.process("file_link_email.ftlh", root);
+        String html = templateResolver.process("file_link_email.ftl", root);
         emailSender.sendEmail("File link.", resultDto.getEmail(), html);
     }
 }

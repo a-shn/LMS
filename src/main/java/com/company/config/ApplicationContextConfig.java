@@ -21,6 +21,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import javax.sql.DataSource;
 import java.util.Objects;
+import java.util.Properties;
 
 @Component
 @Configuration
@@ -69,15 +70,17 @@ public class ApplicationContextConfig {
     @Bean
     public FreeMarkerViewResolver freemarkerViewResolver() {
         FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
+        resolver.setContentType("text/html;charset=UTF-8");
         resolver.setCache(true);
         resolver.setPrefix("");
-        resolver.setSuffix(".ftlh");
+        resolver.setSuffix(".ftl");
         return resolver;
     }
 
     @Bean
     public FreeMarkerConfigurer freemarkerConfig() {
         FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
+        freeMarkerConfigurer.setTemplateLoaderPath("/WEB-INF/templates");
         freeMarkerConfigurer.setConfiguration(Objects.requireNonNull(freeMarkerConfiguration()));
         return freeMarkerConfigurer;
     }
