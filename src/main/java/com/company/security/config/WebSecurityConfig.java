@@ -32,6 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().ignoringAntMatchers("/uploadCourse");
+
         http.authorizeRequests()
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/signin").permitAll()
@@ -40,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/courses").authenticated()
                 .antMatchers("/course").authenticated()
                 .antMatchers("/profile").authenticated()
+                .antMatchers("/uploadCourse").authenticated()
                 .antMatchers("/").authenticated()
                 .and()
                 .rememberMe().rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository());

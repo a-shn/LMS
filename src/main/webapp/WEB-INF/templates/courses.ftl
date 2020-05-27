@@ -14,6 +14,7 @@ Your courses: <br>
 
 <p>Upload new .torrent course</p>
 <form method="POST" action="/uploadCourse" enctype="multipart/form-data">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <input type="file" name="file"/><br/>
     <input type="submit" value="upload torrent"/>
 </form>
