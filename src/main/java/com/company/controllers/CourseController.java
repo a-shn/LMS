@@ -50,11 +50,4 @@ public class CourseController {
         usersCoursesRepository.save(userDetails.getUser(), courseId);
         return "redirect: /course?courseId=" + courseId;
     }
-
-    @PostMapping("/lessonwatched")
-    public String lessonWatched(@RequestParam long courseId, @RequestParam int lessonNumber,
-                              @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        courseLessonsRepository.lessonWatched(userDetails.getUser().getUserId(), courseId, lessonNumber);
-        return "redirect: /course?courseId=" + courseId;
-    }
 }
