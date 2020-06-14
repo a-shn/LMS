@@ -30,21 +30,21 @@ public class SignUpServiceImpl implements SignUpService {
     public boolean signUp(String login, String email, String password) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (usersRepository.findByEmail(email).isEmpty()) {
-            UserDto userDto = new UserDto(login, email, encoder.encode(password));
-            String link = createLink(userDto);
-            signUpPool.put(userDto, link, LocalDateTime.now());
+            User user = new User(null, login, email, encoder.encode(password));
+            String link = createLink(user);
+            signUpPool.put(user, link, LocalDateTime.now());
             Map<String, String> map = new HashMap<>();
             map.put("login", login);
             map.put("link", link);
             String html = templateResolver.process("verification_email_message.ftl", map);
-            emailSender.sendEmail("Email verification.", userDto.getEmail(), html);
+            emailSender.sendEmail("Email verification.", user.getEmail(), html);
             return true;
         } else {
             return false;
         }
     }
 
-    private String createLink(UserDto user) {
+    private String createLink(User user) {
         try {
             String tmp = user.getEmail() + LocalDateTime.now().toString();
             MessageDigest md = MessageDigest.getInstance("MD5");

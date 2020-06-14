@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SignUpPool {
-    private Map<String, UserDto> signUpPool;
+    private Map<String, User> signUpPool;
     private Map<String, LocalDateTime> linkCreationTimes;
     private Map<String, String> linksOfEmails;
     private UsersRepository usersRepository;
@@ -22,11 +22,11 @@ public class SignUpPool {
         this.usersRepository = usersRepository;
     }
 
-    public void put(UserDto userDto, String link, LocalDateTime time) {
-        deleteLinks(userDto.getEmail());
-        signUpPool.put(link, userDto);
+    public void put(User user, String link, LocalDateTime time) {
+        deleteLinks(user.getEmail());
+        signUpPool.put(link, user);
         linkCreationTimes.put(link, time);
-        linksOfEmails.put(userDto.getEmail(), link);
+        linksOfEmails.put(user.getEmail(), link);
     }
 
     public boolean verify(String link) {

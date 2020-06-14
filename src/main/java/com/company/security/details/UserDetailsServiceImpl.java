@@ -3,6 +3,7 @@ package com.company.security.details;
 import com.company.models.User;
 import com.company.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+    @Qualifier("usersEntityManagerImpl")
     @Autowired
     private UsersRepository usersRepository;
 

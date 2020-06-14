@@ -13,7 +13,7 @@ public class UsersJdbcTemplateImpl implements UsersRepository {
     //language=SQL
     private static final String SQL_SELECT_BY_EMAIL = "SELECT * FROM users WHERE email = (?)";
     //language=SQL
-    private static final String SQL_INSERT = "INSERT INTO users (nickname, email, password) VALUES (?,?,?)";
+    private static final String SQL_INSERT = "INSERT INTO users (login, email, password) VALUES (?,?,?)";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -32,7 +32,7 @@ public class UsersJdbcTemplateImpl implements UsersRepository {
 
 
     @Override
-    public void save(UserDto user) {
+    public void save(User user) {
         int updRows = jdbcTemplate.update(connection -> {
             PreparedStatement statement = connection
                     .prepareStatement(SQL_INSERT);
